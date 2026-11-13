@@ -45,230 +45,382 @@ section>.etiquette{display:inline-block!important;padding:5px 11px;border-radius
 .orbe::after{content:"";position:absolute;inset:0;border-radius:50%;background-image:var(--bruit);background-size:80px;mix-blend-mode:overlay;opacity:.5}
 @keyframes souffle{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
 
+/* Couche LISIBLE (14/11/2026) : injectée après artefact-aura.css par fabrique-artefact.py.
+   Retour de Damien : « très peu lisible, qu'ils prennent toute la page, ludique, compris facilement ». */
+:root{--lis-max:1280px;--lis-pad:clamp(20px,5vw,72px);--lis-base:18px}
+html{font-size:var(--lis-base)}
+body.aura{font-size:1rem;line-height:1.6}
+body.aura main{max-width:var(--lis-max)!important;padding:0 var(--lis-pad) 80px!important;margin:0 auto}
+/* progression de lecture + chapitres */
+.lis-progres{position:fixed;left:0;top:0;height:4px;width:0;z-index:50;background:linear-gradient(90deg,var(--bleu-chat),var(--bleu-renard));transition:width .15s linear}
+.lis-nav{position:sticky;top:12px;z-index:40;display:flex;gap:8px;flex-wrap:wrap;padding:10px 12px;margin:16px 0 8px;border-radius:999px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.9);box-shadow:0 10px 30px -18px rgba(12,20,98,.35)}
+.lis-nav a{font:600 13px var(--police);color:var(--texte-2);text-decoration:none;padding:7px 13px;border-radius:999px;transition:all .3s var(--ressort);white-space:nowrap}
+.lis-nav a.on{color:#fff;background:linear-gradient(135deg,var(--bleu-chat),var(--bleu-renard));box-shadow:0 6px 16px -6px rgba(36,54,184,.6)}
+@media(max-width:700px){.lis-nav{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;border-radius:20px}.lis-nav::-webkit-scrollbar{display:none}}
+/* titres et textes */
+body.aura .hero{padding:clamp(40px,6vw,80px) 0 30px!important;display:grid;grid-template-columns:1fr;gap:16px 48px;align-items:end}
+@media(min-width:900px){body.aura .hero{grid-template-columns:3fr 2fr}}
+body.aura .hero h1{font-size:clamp(38px,5.2vw,72px)!important;max-width:16ch!important;line-height:1.02!important}
+body.aura .hero p{font-size:clamp(18px,1.6vw,24px)!important;max-width:40ch!important;line-height:1.45!important}
+body.aura .hero .orbe{position:static!important;--d:56px;grid-row:1;justify-self:start}
+@media(min-width:900px){body.aura .hero .orbe{grid-column:2;grid-row:1/3;justify-self:end;align-self:start;--d:84px}}
+body.aura section{margin:clamp(36px,5vw,64px) 0!important;scroll-margin-top:90px}
+body.aura section>.etiquette{font-size:13px!important;margin:0 0 14px!important}
+body.aura .carte{padding:clamp(20px,3vw,36px)!important}
+body.aura .carte h2{font-size:clamp(24px,2.6vw,36px)!important;line-height:1.1!important}
+body.aura .carte>p,body.aura .spec p,body.aura .spec ul,body.aura .chiffre p,body.aura .bilan,body.aura .franc{font-size:1rem!important;line-height:1.55!important}
+body.aura .spec h3{font-size:clamp(19px,1.5vw,22px)!important}
+body.aura .num{font-size:13px!important}
+body.aura table{font-size:1.05rem!important}
+body.aura th{font-size:12px!important}
+body.aura td,body.aura th{padding:13px 8px!important}
+body.aura .formule{font-size:clamp(22px,2.4vw,34px)!important}
+body.aura .dictee,body.aura .modele{font-size:1.05rem!important;line-height:1.6!important;padding:18px 20px!important}
+body.aura .franc{padding:18px 22px!important;margin-top:18px!important}
+body.aura .pied{font-size:14px!important}
+/* grilles : une carte par idée, pleine largeur */
+.grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px;margin-top:6px}
+.grille>.spec,.grille>.chiffre,.grille>.modele{border-top:0!important;padding:20px 22px!important;margin:0!important;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.95);border-radius:var(--r-l);box-shadow:0 8px 24px -18px rgba(12,20,98,.25);transition:transform .35s var(--ressort),box-shadow .35s}
+.grille>*:hover{transform:translateY(-2px);box-shadow:0 18px 34px -18px rgba(12,20,98,.35)}
+.grille>.chiffre{display:block}
+.grille>.chiffre .gros{display:block;white-space:nowrap;font-size:clamp(34px,3.6vw,56px)!important;min-width:0!important;margin-bottom:10px;line-height:.95}
+.grille>.chiffre .barre{margin-top:14px}
+.grille>.modele{margin:0!important}
+.grille+.franc{grid-column:1/-1}
+/* boutons de jeu plus gros, tapables */
+body.aura .puce{font-size:1rem!important;padding:12px 18px!important;border-radius:16px!important;line-height:1.35}
+body.aura .suite{font-size:15px!important;padding:11px 18px!important}
+body.aura .objectif{font-size:1.05rem!important;gap:10px 18px!important}
+body.aura .objectif .v{font-size:1.1rem!important}
+/* chaque fait = une carte, chaque jeu = large */
+@media(min-width:900px){body.aura section.large .carte{padding:40px 48px!important}}
+@media(prefers-reduced-motion:reduce){.grille>*{transition:none}}
+
 main{max-width:680px;margin:0 auto;position:relative;z-index:1;padding:0 16px 60px}
-.hero{padding:60px 4px 26px;position:relative}
+.hero{padding:56px 4px 20px;position:relative}
 .hero .orbe{--d:70px;position:absolute;right:6px;top:44px;animation:souffle 6s ease-in-out infinite}
 .hero h1{font-size:33px;line-height:1.08;letter-spacing:-.03em;max-width:14ch}
-.hero p{margin:16px 0 0;font-size:16px;line-height:1.5;max-width:36ch;color:var(--texte-2)}
-.hero p b,.carte p b,.franc b,li b{color:var(--texte)}
+.hero p{margin:16px 0 0;font-size:17px;line-height:1.5;max-width:36ch;color:var(--texte-2)}
+b{color:var(--texte)}
+.photo{border-radius:var(--r-l);overflow:hidden;margin:18px 0 0;position:relative}
+.photo img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover}
+.photo figcaption{font-size:13px;color:var(--texte-3);padding:8px 4px 0;line-height:1.4}
 section{margin:34px 0}
 section>.etiquette{display:block;margin:0 4px 10px}
 .carte{padding:20px;margin-bottom:12px}
-.carte h2{font-size:23px;letter-spacing:-.02em;line-height:1.15}
-.carte>p{margin:10px 0 0;line-height:1.55;color:var(--texte-2)}
-.franc{border-left:2px solid var(--pan-2);padding:14px 16px;margin:14px 0 0;color:var(--texte-2);font-size:14px;line-height:1.5;border-radius:0 var(--r-m) var(--r-m) 0;background:rgba(40,95,255,.06)}
-.spec{padding:14px 0;border-top:1px solid var(--filet)}
-.spec:first-of-type{border-top:0;padding-top:4px}
-.num{font:600 12px var(--police-mono);color:var(--pan-3);letter-spacing:.06em}
-.spec h3{font-size:18px;margin-top:4px;line-height:1.2}
-.spec p{margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--texte-2)}
-.spec .metro{display:inline-block;margin-top:8px;font:600 11px var(--police-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--pan-3);background:rgba(40,95,255,.08);padding:4px 10px;border-radius:999px}
+.carte h2{font-size:24px;letter-spacing:-.02em;line-height:1.15}
+.carte>p{margin:10px 0 0;line-height:1.55;color:var(--texte-2);font-size:16px}
+.franc{border-left:2px solid var(--pan-2);padding:14px 16px;margin:14px 0 0;color:var(--texte-2);font-size:15px;line-height:1.5;border-radius:0 var(--r-m) var(--r-m) 0;background:rgba(40,95,255,.06)}
 ul.liste{margin:12px 0 0;padding:0;list-style:none}
-ul.liste li{padding:10px 0;border-top:1px solid var(--filet);font-size:14px;line-height:1.5;color:var(--texte-2)}
+ul.liste li{padding:11px 0;border-top:1px solid var(--filet);font-size:15px;line-height:1.5;color:var(--texte-2)}
 ul.liste li:first-child{border-top:0;padding-top:4px}
+.mot{display:inline-block;background:rgba(40,95,255,.08);color:var(--pan-3);border-radius:6px;padding:0 6px;font-weight:600}
 .frise{margin:12px 0 0;padding:0;list-style:none;position:relative}
 .frise::before{content:"";position:absolute;left:5px;top:10px;bottom:10px;width:1px;background:linear-gradient(180deg,var(--pan-2),rgba(40,95,255,.1))}
 .frise li{position:relative;padding:0 0 18px 26px}
 .frise li::before{content:"";position:absolute;left:0;top:7px;width:11px;height:11px;border-radius:50%;background:radial-gradient(circle,#000 0 20%,#0a1a66 45%,#285FFF 80%,#8AA8FF 100%)}
 .frise .an{font:600 12px var(--police-mono);color:var(--pan-3);letter-spacing:.06em}
-.frise h3{font-size:16px;margin:2px 0 0;line-height:1.3}
-.frise p{margin:4px 0 0;font-size:14px;line-height:1.5;color:var(--texte-2)}
-.carte svg{display:block;width:100%;height:auto;margin-top:14px}
-.carte svg text{font-family:var(--police);fill:var(--texte)}
-.carte svg .q{fill:var(--texte-3);font-size:11.5px}
-.carte svg .n{font-weight:600;font-size:13.5px}
-.carte svg .z{fill:rgba(255,255,255,.7);stroke:rgba(20,20,30,.12)}
-.carte svg .z.fort{fill:rgba(40,95,255,.1);stroke:var(--pan)}
+.frise h3{font-size:17px;margin:2px 0 0;line-height:1.3}
+.frise p{margin:4px 0 0;font-size:15px;line-height:1.5;color:var(--texte-2)}
+.frise .photo{margin:10px 0 4px}
+.carte-stat{display:block;width:100%;height:auto;margin-top:14px;border-radius:var(--r-l);border:1px solid var(--filet)}
+.rives{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.rives .verre{padding:14px;border-radius:var(--r-l)}
+.rives h3{font-size:17px}
+.rives p{margin:6px 0 0;font-size:14px;line-height:1.45;color:var(--texte-2)}
+.rives img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;display:block;margin-bottom:10px}
+.sortie{display:block;border-radius:var(--r-l);overflow:hidden;margin:14px 0 0;background:rgba(255,255,255,.6);border:1px solid var(--filet)}
+.sortie img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.sortie .corps{padding:14px 16px 16px}
+.num{font:600 12px var(--police-mono);color:var(--pan-3);letter-spacing:.06em}
+.sortie h3{font-size:19px;margin-top:2px;line-height:1.2}
+.sortie .sous{margin:2px 0 0;font-size:14px;color:var(--texte-3)}
+.sortie p{margin:8px 0 0;font-size:15px;line-height:1.5;color:var(--texte-2)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
+.metro{font:600 11px var(--police-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--pan-3);background:rgba(40,95,255,.08);padding:6px 10px;border-radius:999px}
+.plans{font:600 13px var(--police);color:#fff;text-decoration:none;background:linear-gradient(135deg,var(--bleu-chat),var(--bleu-renard));padding:7px 14px;border-radius:999px;box-shadow:0 6px 16px -6px rgba(36,54,184,.6)}
 .grille{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.grille .verre{padding:14px;border-radius:var(--r-l)}
-.grille h3{font-size:15px;line-height:1.25}
-.grille p{margin:6px 0 0;font-size:13px;line-height:1.45;color:var(--texte-2)}
+.grille .verre{padding:0 0 12px;border-radius:var(--r-l);overflow:hidden}
+.grille img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.grille h3{font-size:15px;line-height:1.25;margin:10px 12px 0}
+.grille p{margin:6px 12px 0;font-size:13px;line-height:1.45;color:var(--texte-2)}
 .puces{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
 .puce{background:rgba(255,255,255,.7);border:1px solid var(--filet);color:var(--texte-2);font:500 14px var(--police);padding:9px 14px;border-radius:var(--r-pilule);cursor:pointer;transition:all .3s var(--ressort);-webkit-tap-highlight-color:transparent}
 .puce.on{color:#fff;border-color:transparent;background:linear-gradient(135deg,var(--bleu-chat),var(--bleu-renard));box-shadow:0 6px 16px -6px rgba(36,54,184,.6);transform:scale(1.04)}
 .envie{display:none;margin-top:14px;font-size:15px;line-height:1.55;color:var(--texte-2)}
 .envie.vu{display:block}
-.envie b{color:var(--texte)}
-.pied{font-size:13px;color:var(--texte-3);line-height:1.5;margin:40px 4px 0}
-@media (max-width:420px){.grille{grid-template-columns:1fr}.hero h1{font-size:29px}}
+.pied{font-size:12px;color:var(--texte-3);line-height:1.6;margin:40px 4px 0}
+.pied a{color:var(--texte-3)}
+@media (max-width:420px){.grille,.rives{grid-template-columns:1fr}.hero h1{font-size:29px}}
 </style>
 </head>
 <body class="aura">
 <div class="auras" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="lis-progres" aria-hidden="true"></div>
 <main>
   <header class="hero">
     <span class="orbe"></span>
     <span class="etiquette">Tour d'Asie · Shanghai · novembre 2026</span>
-    <h1>Shanghai, une ville en deux rives</h1>
-    <p>Un fleuve, le Huangpu, coupe la ville. <b>À l'ouest, Puxi : la vieille ville, là où l'on vit et sort. À l'est, Pudong : les tours construites depuis 1990.</b> Tout le reste découle de ça.</p>
+    <h1>Shanghai, mode d'emploi</h1>
+    <p>Tu es dans la plus grande ville de Chine : <b>25 millions d'habitants</b>, plus que Paris, Londres et New York réunies. Cette page t'explique la ville en images, et où aller pour tes sorties.</p>
+    <figure class="photo"><img src="photos/bund-nuit.jpg" alt="Les tours de Pudong vues du Bund, la nuit"><figcaption>Les tours de Pudong vues depuis le Bund, la nuit. C'est l'image que tout le monde connaît de Shanghai.</figcaption></figure>
   </header>
 
   <section>
-    <span class="etiquette">En 2 minutes</span>
+    <span class="etiquette">La règle numéro 1</span>
     <div class="verre carte">
-      <h2>Cinq choses à savoir</h2>
+      <h2>Un fleuve coupe la ville en deux</h2>
+      <p>Le fleuve s'appelle le <span class="mot">Huangpu</span>. Il sépare deux mondes très différents.</p>
+      <div class="rives">
+        <div class="verre"><img src="photos/bund-jour.jpg" alt="Le Bund, vieux immeubles"><h3>Puxi, rive ouest</h3><p>La vieille ville. Les immeubles anciens, les rues avec des arbres, les cafés, les boutiques. <b>C'est là que tu sors.</b></p></div>
+        <div class="verre"><img src="photos/pearl.jpg" alt="La Pearl Tower"><h3>Pudong, rive est</h3><p>Les gratte-ciel. Il y a 35 ans, c'étaient des champs. <b>Tu y vas une fois</b>, pour monter dans une tour.</p></div>
+      </div>
+      <div class="franc">Pour passer d'une rive à l'autre : le métro ligne 2 (une seule station), ou le ferry pour 2 yuans. Le ferry, c'est le plus beau trajet de la ville.</div>
+    </div>
+  </section>
+
+  <section>
+    <span class="etiquette">La carte de tes sorties</span>
+    <div class="verre carte">
+      <h2>Où sont les 10 endroits à voir</h2>
+      <p>Chaque numéro est une sortie décrite plus bas. Le fleuve, c'est la bande bleue qui serpente au milieu.</p>
+      <svg class="carte-stat" viewBox="0 0 1024 1024" role="img" aria-label="Carte des 10 sorties"><image href="tuiles/13-6858-3346.png" x="0" y="0" width="256" height="256"/><image href="tuiles/13-6858-3347.png" x="0" y="256" width="256" height="256"/><image href="tuiles/13-6858-3348.png" x="0" y="512" width="256" height="256"/><image href="tuiles/13-6858-3349.png" x="0" y="768" width="256" height="256"/><image href="tuiles/13-6859-3346.png" x="256" y="0" width="256" height="256"/><image href="tuiles/13-6859-3347.png" x="256" y="256" width="256" height="256"/><image href="tuiles/13-6859-3348.png" x="256" y="512" width="256" height="256"/><image href="tuiles/13-6859-3349.png" x="256" y="768" width="256" height="256"/><image href="tuiles/13-6860-3346.png" x="512" y="0" width="256" height="256"/><image href="tuiles/13-6860-3347.png" x="512" y="256" width="256" height="256"/><image href="tuiles/13-6860-3348.png" x="512" y="512" width="256" height="256"/><image href="tuiles/13-6860-3349.png" x="512" y="768" width="256" height="256"/><image href="tuiles/13-6861-3346.png" x="768" y="0" width="256" height="256"/><image href="tuiles/13-6861-3347.png" x="768" y="256" width="256" height="256"/><image href="tuiles/13-6861-3348.png" x="768" y="512" width="256" height="256"/><image href="tuiles/13-6861-3349.png" x="768" y="768" width="256" height="256"/><g><circle cx="661" cy="265" r="26" fill="#2f6be0" stroke="#fff" stroke-width="4"/><text x="661" y="274" text-anchor="middle" font-size="26" font-weight="600" fill="#fff" font-family="Poly,system-ui,sans-serif">1</text></g><g><circle cx="344" cy="501" r="26" fill="#2f6be0" stroke="#fff" stroke-width="4"/><text x="344" y="510" text-anchor="middle" font-size="26" font-weight="600" fill="#fff" font-family="Poly,system-ui,sans-serif">2</text></g><g><circle cx="519" cy="467" r="26" fill="#2f6be0" stroke="#fff" stroke-width="4"/><text x="519" y="476" text-anchor="middle" font-size="26" font-weight="600" fill="#fff" font-family="Poly,system-ui,sans-serif">3</text></g><g><circle cx="670" cy="350" r="26" fill="#2f6be0" stroke="#fff" stroke-width="4"/><text x="670" y="359" text-anchor="middle" font-size="26" font-weight="600" fill="#fff" font-family="Poly,system-ui,sans-serif">4</text></g><g><circle cx="749" cy="306" r="26" fill="#2f6be0" stroke="#fff" stroke-width="4"/><text x="749" y="315" text-anchor="middle" font-size="26" font-weight="600" fill="#fff" font-family="Poly,system-ui,sans-serif">5</text></g><g><circle cx="562" cy="310" r="26" fill="#2f6be0" stroke="#fff" stroke-width="4"/><text x="562" y="319" text-anchor="middle" font-size="26" font-weight="600" fill="#fff" font-family="Poly,system-ui,sans-serif">6</text></g><g><circle cx="399" cy="376" r="26" fill="#2f6be0" stroke="#fff" stroke-width="4"/><text x="399" y="385" text-anchor="middle" font-size="26" font-weight="600" fill="#fff" font-family="Poly,system-ui,sans-serif">7</text></g><g><circle cx="501" cy="688" r="26" fill="#2f6be0" stroke="#fff" stroke-width="4"/><text x="501" y="697" text-anchor="middle" font-size="26" font-weight="600" fill="#fff" font-family="Poly,system-ui,sans-serif">8</text></g><g><circle cx="676" cy="154" r="26" fill="#2f6be0" stroke="#fff" stroke-width="4"/><text x="676" y="163" text-anchor="middle" font-size="26" font-weight="600" fill="#fff" font-family="Poly,system-ui,sans-serif">9</text></g><g><circle cx="568" cy="399" r="26" fill="#2f6be0" stroke="#fff" stroke-width="4"/><text x="568" y="408" text-anchor="middle" font-size="26" font-weight="600" fill="#fff" font-family="Poly,system-ui,sans-serif">10</text></g></svg></div>
+      <div class="franc"><b>Les trois à faire en premier :</b> 1 le Bund, 2 la Concession française, 5 les tours. Ils sont tous les trois à moins de 20 minutes de métro les uns des autres.</div>
+    </div>
+  </section>
+
+  <section>
+    <span class="etiquette">Comprendre en 5 points</span>
+    <div class="verre carte">
+      <h2>Pourquoi Shanghai ressemble à ça</h2>
       <ul class="liste">
-        <li><b>Jeune et étrangère.</b> Il y a 180 ans, un port de pêcheurs. Sa grandeur vient des concessions occidentales (1843 à 1943) : d'où le Bund européen et les platanes de la Concession française.</li>
-        <li><b>Ville de commerce, pas d'empire.</b> Pas de Cité interdite. Les monuments sont des banques, des hôtels, des villas, des tours. On la visite en marchant, pas en faisant la queue.</li>
-        <li><b>Moderne et très sûre.</b> 25 millions d'habitants, métro géant, tout se paie au téléphone, on marche partout de nuit.</li>
-        <li><b>Une identité à part.</b> Dialecte shanghaïen, cuisine sucrée, style « haipai » mêlant Chine et Occident. Les Shanghaïens se voient comme les Parisiens de la Chine.</li>
-        <li><b>La saison.</b> Mi-novembre : 10 à 18 °C, souvent gris. Les platanes jaunissent fin novembre, le meilleur moment pour marcher dans la Concession française. Et c'est la saison du crabe poilu.</li>
+        <li><b>C'est une ville jeune.</b> Il y a 180 ans, c'était un petit port de pêcheurs. Pékin, la capitale, a 3 000 ans. Shanghai, à peine 180.</li>
+        <li><b>Ce sont les Européens qui l'ont construite.</b> De 1843 à 1943, des morceaux de la ville appartenaient à l'Angleterre, à la France et aux États-Unis. On appelle ça les <span class="mot">concessions</span>. C'est pour ça qu'on voit des immeubles européens et des platanes, comme à Paris.</li>
+        <li><b>Il n'y a pas de palais ni de grande muraille.</b> Shanghai, c'est une ville de commerce. Les monuments, ce sont des banques, des hôtels et des tours. On la visite en marchant dans les rues.</li>
+        <li><b>C'est très sûr et très moderne.</b> Tu peux marcher partout la nuit. Tout se paie avec le téléphone, même un beignet à 2 yuans.</li>
+        <li><b>C'est la saison idéale.</b> En novembre, il fait entre 10 et 18 degrés. Les platanes deviennent jaunes. Et c'est la saison du crabe poilu, le plat le plus célèbre de la ville.</li>
       </ul>
     </div>
   </section>
 
   <section>
-    <span class="etiquette">Histoire en 8 dates</span>
+    <span class="etiquette">L'histoire en 8 étapes</span>
     <div class="verre carte">
-      <h2>Un port forcé d'ouvrir, devenu vitrine</h2>
-      <p>Ouvert par les Occidentaux en 1843, ville la plus cosmopolite d'Asie dans les années 1930, fermée sous Mao, relancée en 1990.</p>
+      <h2>De village de pêcheurs à ville géante</h2>
+      <figure class="photo"><img src="photos/carte-1930.jpg" alt="Plan de Shanghai en 1935"><figcaption>Plan de Shanghai en 1935. On voit le fleuve qui serpente et, à droite, Pudong encore vide.</figcaption></figure>
       <ol class="frise">
-        <li><span class="an">1292</span><h3>Une ville de comté sous les Yuan</h3><p>Port de coton et de pêche. Reste : la vieille ville, Yu Garden, les rues autour de Fangbang Lu.</p></li>
-        <li><span class="an">1842</span><h3>Traité de Nankin</h3><p>Après la guerre de l'opium, la Chine doit ouvrir Shanghai aux Britanniques. Le point de départ de tout.</p></li>
-        <li><span class="an">1843 à 1849</span><h3>Les concessions</h3><p>Britannique, américaine (fusionnées en Concession internationale) et française : des territoires hors des lois chinoises. Reste : le Bund, les villas et platanes de la Concession française.</p></li>
-        <li><span class="an">1920 à 1937</span><h3>L'âge d'or, « Paris de l'Orient »</h3><p>Jazz, gangsters de la Bande verte, réfugiés russes puis juifs, naissance du Parti communiste chinois ici en 1921. Reste : Peace Hotel, Cathay Theatre, les lilong en briques.</p></li>
-        <li><span class="an">1937 à 1945</span><h3>Occupation japonaise</h3><p>Le ghetto de Hongkou accueille 20 000 réfugiés juifs européens. Reste : le musée des réfugiés, le quartier de Tilanqiao.</p></li>
-        <li><span class="an">1949</span><h3>Les communistes prennent la ville</h3><p>Les étrangers partent, Shanghai devient industrielle et grise pendant 40 ans. Reste : les usines reconverties (M50, 1933 Old Millfun, Power Station of Art).</p></li>
-        <li><span class="an">1990</span><h3>Deng Xiaoping ouvre Pudong</h3><p>Des rizières deviennent Lujiazui. Pearl Tower 1994, Jin Mao 1999, SWFC 2008, Shanghai Tower 2015 (632 m).</p></li>
-        <li><span class="an">2010</span><h3>Exposition universelle</h3><p>73 millions de visiteurs, la ville se refait : métro, berges. Reste : le pavillon chinois devenu China Art Museum, le West Bund.</p></li>
+        <li><span class="an">1292</span><h3>Un village devient une ville</h3><p>Shanghai est un port où l'on vend du coton et du poisson. Il en reste la vieille ville et le jardin Yu.</p></li>
+        <li><span class="an">1842</span><h3>L'Angleterre gagne une guerre</h3><p>La Chine perd la guerre de l'opium. En punition, elle doit laisser les Anglais commercer à Shanghai.</p></li>
+        <li><span class="an">1843 à 1849</span><h3>Les étrangers s'installent</h3><p>Les Anglais, les Américains puis les Français obtiennent chacun un quartier où les lois chinoises ne s'appliquent pas. Ils construisent le Bund et la Concession française.</p>
+          <figure class="photo"><img src="photos/peace-hotel.jpg" alt="Le Peace Hotel"><figcaption>Le Peace Hotel, sur le Bund, construit en 1929. Son toit vert est le symbole de l'époque.</figcaption></figure></li>
+        <li><span class="an">1920 à 1937</span><h3>L'âge d'or, le « Paris de l'Orient »</h3><p>Jazz, cinémas, gangsters, millionnaires. Des réfugiés russes arrivent. Le Parti communiste chinois naît ici, en 1921, dans une petite maison de Xintiandi.</p></li>
+        <li><span class="an">1937 à 1945</span><h3>Le Japon occupe la ville</h3><p>Pendant la guerre, 20 000 Juifs qui fuient l'Europe sont accueillis dans le quartier de Hongkou.</p></li>
+        <li><span class="an">1949</span><h3>Les communistes prennent le pouvoir</h3><p>Les étrangers partent. Shanghai devient une ville d'usines, grise, pendant 40 ans.</p></li>
+        <li><span class="an">1990</span><h3>Pudong sort de terre</h3><p>Le gouvernement décide de construire un quartier d'affaires sur les champs de Pudong. En 25 ans, des tours de 600 m poussent.</p>
+          <figure class="photo"><img src="photos/lujiazui.jpg" alt="Les tours de Lujiazui"><figcaption>Lujiazui aujourd'hui. La plus haute, la Shanghai Tower, fait 632 mètres, deux fois la tour Eiffel.</figcaption></figure></li>
+        <li><span class="an">2010</span><h3>L'Exposition universelle</h3><p>73 millions de visiteurs. La ville refait son métro et ses bords de fleuve. C'est le Shanghai que tu vois aujourd'hui.</p></li>
       </ol>
-    </div>
-  </section>
-
-  <section>
-    <span class="etiquette">Géographie</span>
-    <div class="verre carte">
-      <h2>Tu sors à Puxi, tu visites Pudong une fois</h2>
-      <p>Le centre de gravité de tes sorties : le triangle <b>Bund, People's Square, Concession française</b>, à pied ou en deux stations de métro.</p>
-      <svg viewBox="0 0 640 440" role="img" aria-label="Carte mentale de Shanghai">
-        <path d="M400 0 C 430 90, 360 190, 410 270 C 440 330, 400 390, 430 440" fill="none" stroke="#285FFF" stroke-opacity=".22" stroke-width="26"/>
-        <path d="M0 110 C 150 100, 290 130, 396 110" fill="none" stroke="#285FFF" stroke-opacity=".22" stroke-width="9"/>
-        <text x="14" y="98" class="q">Suzhou Creek</text>
-        <text x="418" y="225" class="q" transform="rotate(80 418 225)">Fleuve Huangpu</text>
-        <text x="24" y="40" class="n" style="font-size:14px">PUXI, rive ouest</text>
-        <text x="24" y="56" class="q">l'ancienne ville, là où tu sors</text>
-        <text x="470" y="40" class="n" style="font-size:14px">PUDONG, rive est</text>
-        <text x="470" y="56" class="q">depuis 1990</text>
-        <g><rect class="z" x="250" y="30" width="130" height="50" rx="12"/><text x="315" y="52" text-anchor="middle" class="n">Hongkou</text><text x="315" y="68" text-anchor="middle" class="q">ghetto juif, 1933</text></g>
-        <g><rect class="z" x="24" y="140" width="130" height="50" rx="12"/><text x="89" y="162" text-anchor="middle" class="n">Jing'an</text><text x="89" y="178" text-anchor="middle" class="q">temple, malls</text></g>
-        <g><rect class="z" x="166" y="140" width="130" height="50" rx="12"/><text x="231" y="162" text-anchor="middle" class="n">People's Square</text><text x="231" y="178" text-anchor="middle" class="q">musées, Nanjing Rd</text></g>
-        <g><rect class="z fort" x="308" y="140" width="76" height="50" rx="12"/><text x="346" y="162" text-anchor="middle" class="n">Bund</text><text x="346" y="178" text-anchor="middle" class="q">1920</text></g>
-        <g><rect class="z fort" x="470" y="140" width="150" height="50" rx="12"/><text x="545" y="162" text-anchor="middle" class="n">Lujiazui</text><text x="545" y="178" text-anchor="middle" class="q">les 3 tours</text></g>
-        <g><rect class="z fort" x="24" y="215" width="210" height="66" rx="12"/><text x="129" y="238" text-anchor="middle" class="n">Concession française</text><text x="129" y="254" text-anchor="middle" class="q">platanes, villas, cafés</text><text x="129" y="268" text-anchor="middle" class="q">Anfu Lu, Wukang Lu, Tianzifang</text></g>
-        <g><rect class="z" x="246" y="215" width="100" height="50" rx="12"/><text x="296" y="237" text-anchor="middle" class="n">Xintiandi</text><text x="296" y="253" text-anchor="middle" class="q">shikumen chics</text></g>
-        <g><rect class="z" x="470" y="215" width="150" height="50" rx="12"/><text x="545" y="237" text-anchor="middle" class="n">Century Park</text><text x="545" y="253" text-anchor="middle" class="q">résidentiel, sciences</text></g>
-        <g><rect class="z" x="246" y="280" width="130" height="50" rx="12"/><text x="311" y="302" text-anchor="middle" class="n">Vieille ville</text><text x="311" y="318" text-anchor="middle" class="q">Yu Garden, 1292</text></g>
-        <g><rect class="z" x="24" y="310" width="210" height="50" rx="12"/><text x="129" y="332" text-anchor="middle" class="n">West Bund</text><text x="129" y="348" text-anchor="middle" class="q">berges, musées d'art, vélo</text></g>
-        <g><rect class="z" x="470" y="300" width="150" height="50" rx="12"/><text x="545" y="322" text-anchor="middle" class="n">Zone Expo 2010</text><text x="545" y="338" text-anchor="middle" class="q">China Art Museum</text></g>
-        <rect x="24" y="394" width="12" height="12" rx="3" fill="rgba(40,95,255,.1)" stroke="#285FFF"/>
-        <text x="44" y="404" class="q">Les trois zones à voir en premier</text>
-        <text x="24" y="428" class="q">Traverser : métro ligne 2 (1 station), ferry 2 yuans depuis le sud du Bund.</text>
-      </svg>
-      <div class="franc"><b>Le Bund</b> est la rive ouest du fleuve : on y voit Pudong en face. <b>La Concession française</b> n'est pas un quartier administratif mais une zone de 2 à 3 km au sud-ouest de People's Square, reconnaissable à ses rues bordées de platanes.</div>
     </div>
   </section>
 
   <section>
     <span class="etiquette">Se déplacer et payer</span>
     <div class="verre carte">
-      <h2>Tout passe par le téléphone</h2>
-      <p>Alipay pour payer et prendre le métro, Didi pour les taxis, Apple Plans pour se repérer. Le métro : 20 lignes, panneaux en anglais, 3 à 7 yuans, fermé vers 23 h.</p>
+      <h2>Tout passe par ton téléphone</h2>
+      <figure class="photo"><img src="photos/metro.jpg" alt="Un quai du métro de Shanghai"><figcaption>Le métro : 20 lignes, panneaux en anglais, propre et très fréquent. Entre 3 et 7 yuans le trajet.</figcaption></figure>
       <ul class="liste">
-        <li><b>Payer.</b> Alipay avec ta carte Visa ou Mastercard liée, ou WeChat Pay. Garde 200 yuans en billets pour le cas où.</li>
-        <li><b>Métro.</b> Dans Alipay : Transport, puis Shanghai Metro, QR code aux portillons. Ou carte physique au guichet, 20 yuans de caution.</li>
-        <li><b>Taxi.</b> Didi (version anglaise) ou directement dans Alipay. Bund vers Concession française : 20 à 30 yuans. Montre l'adresse en chinois.</li>
-        <li><b>Se repérer.</b> Apple Plans marche bien ici (données Amap). Google Maps est décalé et incomplet.</li>
-        <li><b>Internet.</b> eSIM étrangère en roaming ou VPN. Ton Tailscale vers le NAS reste la solution testée en Chine.</li>
-        <li><b>Traduire.</b> Apple Traduction en mode conversation, l'appareil photo pour les menus. Peu d'anglais hors hôtels.</li>
-        <li><b>Vélo.</b> HelloBike via Alipay (icône vélo bleue) : scanner, rouler, poser. 1,5 yuan la demi-heure. Parfait dans la Concession française.</li>
-        <li><b>Traverser le fleuve.</b> Métro ligne 2, Nanjing East Road vers Lujiazui, ou ferry Jinling Lu depuis le sud du Bund : 2 yuans, le plus beau trajet de la ville.</li>
+        <li><b>Payer.</b> L'app Alipay, avec ta carte bancaire dedans. Tu scannes un QR code, c'est payé. Garde quand même 200 yuans en billets.</li>
+        <li><b>Prendre le métro.</b> Dans Alipay, ouvre « Transport », puis « Shanghai Metro ». Ça te donne un QR code à scanner aux portillons. Le métro ferme vers 23 h.</li>
+        <li><b>Prendre un taxi.</b> L'app Didi, c'est le Uber chinois. Un trajet entre deux quartiers coûte 20 à 30 yuans. Montre toujours l'adresse écrite en chinois.</li>
+        <li><b>Te repérer.</b> Apple Plans marche très bien ici. Google Maps, non : il est décalé de plusieurs centaines de mètres.</li>
+        <li><b>Faire du vélo.</b> Dans Alipay, l'icône vélo bleue (HelloBike). Tu scannes un vélo, tu roules, tu le poses où tu veux. 1,5 yuan la demi-heure.</li>
+        <li><b>Parler.</b> Peu de gens parlent anglais. Apple Traduction en mode conversation suffit. Pour les menus, prends-les en photo avec l'app.</li>
       </ul>
-      <div class="franc"><b>Trois stations à connaître :</b> Nanjing East Road (lignes 2 et 10) pour le Bund, People's Square (1, 2, 8) pour le centre, South Shaanxi Road (1, 10, 12) pour la Concession française.</div>
+      <div class="franc"><b>Les 3 stations à retenir :</b> Nanjing East Road pour le Bund, People's Square pour le centre, South Shaanxi Road pour la Concession française.</div>
     </div>
   </section>
 
   <section>
-    <span class="etiquette">Dix sorties, une demi-journée chacune</span>
+    <span class="etiquette">Les 10 sorties</span>
     <div class="verre carte">
-      <h2>Commence par la première, ce soir</h2>
-      <div class="spec"><span class="num">01</span><h3>Le Bund, de jour puis de nuit</h3><p>Arriver 16 h 30, marcher du nord (Waibaidu Bridge) au sud, passer dans le hall du Fairmont Peace Hotel, rester jusqu'à la nuit (coucher de soleil vers 16 h 50). Rooftop : Bar Rouge ou The Nest. Lumières de Pudong éteintes après 22 h.</p><span class="metro">Nanjing East Road · l. 2, 10</span></div>
-      <div class="spec"><span class="num">02</span><h3>Concession française ouest : Anfu Lu, Wukang Lu</h3><p>Wukang Building (l'immeuble en proue), puis Wukang Lu vers le nord, Anfu Lu (cafés, créateurs), Ferguson Lane, Yongkang Lu. Le quartier le plus photogénique, ton terrain : platanes, mode locale, Shanghaïens bien habillés.</p><span class="metro">Shanghai Library · l. 10</span></div>
-      <div class="spec"><span class="num">03</span><h3>Concession française est : Tianzifang, Sinan Mansions</h3><p>Tianzifang (ruelles d'artisans, touristique mais vivant), Sinan Lu et ses villas, Fuxing Park (les retraités qui dansent le matin). Lilong et shikumen, l'architecture propre à Shanghai.</p><span class="metro">Dapuqiao · l. 9</span></div>
-      <div class="spec"><span class="num">04</span><h3>Vieille ville et Yu Garden</h3><p>Yu Garden dès 8 h 30 (jardin Ming, 40 yuans), bazar autour (faux ancien), Temple du Dieu de la ville, puis Fangbang Lu vers l'ouest et les ruelles encore debout près de Dajing Lu. Les xiaolongbao de Nanxiang : longue queue, préfère l'étage.</p><span class="metro">Yuyuan Garden · l. 10, 14</span></div>
-      <div class="spec"><span class="num">05</span><h3>Lujiazui, les tours</h3><p>Passerelle circulaire piétonne, puis monter : Shanghai Tower (118e étage, 180 yuans) ou SWFC, l'ouvre-bouteille (100e étage). Retour par le ferry. Par temps clair seulement, et vide le soir : rien à faire après la descente.</p><span class="metro">Lujiazui · l. 2</span></div>
-      <div class="spec"><span class="num">06</span><h3>People's Square et Nanjing Road</h3><p>Musée de Shanghai (bronzes, céramiques, gratuit, réserver sur WeChat ou passeport à l'entrée), puis Nanjing Road piétonne vers l'est jusqu'au Bund. Nanjing Road, c'est les Champs-Élysées : foule et enseignes, utile seulement pour montrer la densité.</p><span class="metro">People's Square · l. 1, 2, 8</span></div>
-      <div class="spec"><span class="num">07</span><h3>Jing'an</h3><p>Le temple doré (50 yuans), Jing'an Park en face, Wujiang Lu pour manger, Zhangyuan (shikumen restaurés, boutiques de luxe). Le contraste temple doré et malls de verre en un seul plan.</p><span class="metro">Jing'an Temple · l. 2, 7, 14</span></div>
-      <div class="spec"><span class="num">08</span><h3>West Bund, bord de fleuve</h3><p>Louer un HelloBike, longer les berges sur 3 km : Long Museum, West Bund Museum (partenariat Centre Pompidou), TANK Shanghai (anciennes cuves à pétrole). Calme, espace, lumière de fin d'après-midi : bon pour tourner face caméra sans foule.</p><span class="metro">Yunjin Road · l. 11</span></div>
-      <div class="spec"><span class="num">09</span><h3>Hongkou et Suzhou Creek</h3><p>Musée des réfugiés juifs, 1933 Old Millfun (abattoir art déco en béton, gratuit, un décor de film), retour à pied le long de Suzhou Creek jusqu'au Bund.</p><span class="metro">Tilanqiao · l. 12</span></div>
-      <div class="spec"><span class="num">10</span><h3>Xintiandi et le 1er Congrès</h3><p>Shikumen reconstruits en zone chic (restos, terrasses), musée du site du 1er Congrès du PCC (gratuit, passeport), puis Huaihai Lu pour le shopping. Propre, cher : bien pour un dîner, pas pour comprendre la vraie ville.</p><span class="metro">Xintiandi · l. 10, 13</span></div>
+      <h2>Une sortie = une demi-journée</h2>
+      <p>Commence par la première ce soir. Chaque carte a un bouton pour ouvrir le lieu dans Plans.</p>
+      
+    <article class="sortie">
+      <img src="photos/bund-nuit.jpg" alt="Le Bund" loading="lazy">
+      <div class="corps">
+        <span class="num">01</span>
+        <h3>Le Bund</h3>
+        <p class="sous">Le soir, c'est le plus beau</p>
+        <p>Une promenade de 1,5 km au bord du fleuve. D'un côté, les vieux immeubles de banques des années 1920. De l'autre, les tours de Pudong qui s'allument la nuit.</p>
+        <p><b>Quoi faire :</b> Arrive vers 16 h 30. Marche du nord au sud. Entre dans le hall du Peace Hotel, c'est gratuit. Reste jusqu'à la nuit : vers 17 h 30 tout s'allume. Les lumières s'éteignent à 22 h.</p>
+        <div class="actions"><span class="metro">Nanjing East Road · lignes 2 et 10</span><a class="plans" href="https://maps.apple.com/?ll=31.2397,121.4904&q=Le+Bund">Ouvrir dans Plans</a></div>
+      </div>
+    </article>
+    <article class="sortie">
+      <img src="photos/concession.jpg" alt="Concession française, côté ouest" loading="lazy">
+      <div class="corps">
+        <span class="num">02</span>
+        <h3>Concession française, côté ouest</h3>
+        <p class="sous">Le quartier le plus beau pour marcher</p>
+        <p>Des rues avec de grands platanes, des petites villas, des cafés et des boutiques de créateurs. C'est le quartier où les Shanghaïens stylés sortent.</p>
+        <p><b>Quoi faire :</b> Commence au Wukang Building (un immeuble en forme de bateau). Remonte Wukang Lu, puis Anfu Lu. C'est là que tu fais tes photos de style.</p>
+        <div class="actions"><span class="metro">Shanghai Library · ligne 10</span><a class="plans" href="https://maps.apple.com/?ll=31.205,121.436&q=Concession+française,+côté+ouest">Ouvrir dans Plans</a></div>
+      </div>
+    </article>
+    <article class="sortie">
+      <img src="photos/tianzifang.jpg" alt="Concession française, côté est" loading="lazy">
+      <div class="corps">
+        <span class="num">03</span>
+        <h3>Concession française, côté est</h3>
+        <p class="sous">Tianzifang et les ruelles</p>
+        <p>Tianzifang, c'est un labyrinthe de ruelles avec des ateliers d'artistes, des petites boutiques et des bars. Un peu touristique, mais vivant.</p>
+        <p><b>Quoi faire :</b> Après Tianzifang, marche vers Sinan Lu (villas anciennes) et Fuxing Park. Le matin, les retraités y dansent et font du tai-chi.</p>
+        <div class="actions"><span class="metro">Dapuqiao · ligne 9</span><a class="plans" href="https://maps.apple.com/?ll=31.21,121.466&q=Concession+française,+côté+est">Ouvrir dans Plans</a></div>
+      </div>
+    </article>
+    <article class="sortie">
+      <img src="photos/yuyuan.jpg" alt="La vieille ville et le jardin Yu" loading="lazy">
+      <div class="corps">
+        <span class="num">04</span>
+        <h3>La vieille ville et le jardin Yu</h3>
+        <p class="sous">Le Shanghai d'avant les étrangers</p>
+        <p>Un jardin chinois vieux de 450 ans, avec des bassins, des rochers et des pavillons en bois. Autour, un bazar avec des toits chinois (reconstruits, mais jolis).</p>
+        <p><b>Quoi faire :</b> Vas-y dès 8 h 30, avant la foule. Entrée 40 yuans. Pour les raviolis, évite la grande queue du rez-de-chaussée de Nanxiang et monte à l'étage.</p>
+        <div class="actions"><span class="metro">Yuyuan Garden · lignes 10 et 14</span><a class="plans" href="https://maps.apple.com/?ll=31.2272,121.492&q=La+vieille+ville+et+le+jardin+Yu">Ouvrir dans Plans</a></div>
+      </div>
+    </article>
+    <article class="sortie">
+      <img src="photos/lujiazui.jpg" alt="Lujiazui, les tours" loading="lazy">
+      <div class="corps">
+        <span class="num">05</span>
+        <h3>Lujiazui, les tours</h3>
+        <p class="sous">Monter tout en haut</p>
+        <p>C'est le quartier des gratte-ciel, en face du Bund. La Shanghai Tower fait 632 m, la 3e plus haute du monde. Il y a aussi la Pearl Tower, celle avec les boules roses.</p>
+        <p><b>Quoi faire :</b> Marche sur la passerelle ronde au-dessus des voitures. Monte dans la Shanghai Tower (118e étage, 180 yuans) seulement s'il fait beau. Reviens par le ferry, 2 yuans.</p>
+        <div class="actions"><span class="metro">Lujiazui · ligne 2</span><a class="plans" href="https://maps.apple.com/?ll=31.2336,121.5055&q=Lujiazui,+les+tours">Ouvrir dans Plans</a></div>
+      </div>
+    </article>
+    <article class="sortie">
+      <img src="photos/nanjing.jpg" alt="People's Square et Nanjing Road" loading="lazy">
+      <div class="corps">
+        <span class="num">06</span>
+        <h3>People's Square et Nanjing Road</h3>
+        <p class="sous">Le centre et sa rue piétonne</p>
+        <p>People's Square, c'est le centre de la ville : un grand parc, des musées, et la rue Nanjing, piétonne et pleine d'enseignes lumineuses, comme les Champs-Élysées.</p>
+        <p><b>Quoi faire :</b> Le musée de Shanghai est gratuit (montre ton passeport). Puis marche vers l'est sur Nanjing Road : au bout, tu arrives au Bund.</p>
+        <div class="actions"><span class="metro">People's Square · lignes 1, 2 et 8</span><a class="plans" href="https://maps.apple.com/?ll=31.233,121.4735&q=People's+Square+et+Nanjing+Road">Ouvrir dans Plans</a></div>
+      </div>
+    </article>
+    <article class="sortie">
+      <img src="photos/jingan.jpg" alt="Jing'an" loading="lazy">
+      <div class="corps">
+        <span class="num">07</span>
+        <h3>Jing'an</h3>
+        <p class="sous">Un temple doré entre les malls</p>
+        <p>Un temple bouddhiste aux toits dorés, coincé entre des centres commerciaux en verre. C'est tout Shanghai en une image.</p>
+        <p><b>Quoi faire :</b> Entrée 50 yuans. En face, Jing'an Park. Pour manger, Wujiang Lu, juste à côté.</p>
+        <div class="actions"><span class="metro">Jing'an Temple · lignes 2, 7 et 14</span><a class="plans" href="https://maps.apple.com/?ll=31.2234,121.4455&q=Jing'an">Ouvrir dans Plans</a></div>
+      </div>
+    </article>
+    <article class="sortie">
+      <img src="photos/westbund.jpg" alt="West Bund" loading="lazy">
+      <div class="corps">
+        <span class="num">08</span>
+        <h3>West Bund</h3>
+        <p class="sous">Le bord de fleuve calme</p>
+        <p>Des berges aménagées au sud de la ville, avec des musées d'art moderne et de la place pour marcher ou rouler à vélo. Peu de monde.</p>
+        <p><b>Quoi faire :</b> Loue un vélo HelloBike et longe le fleuve sur 3 km. Bon endroit pour filmer face caméra sans foule.</p>
+        <div class="actions"><span class="metro">Yunjin Road · ligne 11</span><a class="plans" href="https://maps.apple.com/?ll=31.1775,121.463&q=West+Bund">Ouvrir dans Plans</a></div>
+      </div>
+    </article>
+    <article class="sortie">
+      <img src="photos/1933.jpg" alt="Hongkou et 1933" loading="lazy">
+      <div class="corps">
+        <span class="num">09</span>
+        <h3>Hongkou et 1933</h3>
+        <p class="sous">Un ancien abattoir devenu décor</p>
+        <p>1933 Old Millfun est un vieil abattoir en béton, avec des escaliers et des passerelles partout. On dirait un décor de film. Gratuit.</p>
+        <p><b>Quoi faire :</b> Juste à côté, le musée des réfugiés juifs raconte comment 20 000 Européens ont été accueillis ici pendant la guerre. Reviens à pied le long de la rivière Suzhou.</p>
+        <div class="actions"><span class="metro">Tilanqiao · ligne 12</span><a class="plans" href="https://maps.apple.com/?ll=31.256,121.493&q=Hongkou+et+1933">Ouvrir dans Plans</a></div>
+      </div>
+    </article>
+    <article class="sortie">
+      <img src="photos/shikumen.jpg" alt="Xintiandi" loading="lazy">
+      <div class="corps">
+        <span class="num">10</span>
+        <h3>Xintiandi</h3>
+        <p class="sous">Les vieilles maisons rénovées</p>
+        <p>Des maisons traditionnelles en briques (les shikumen) refaites à neuf, avec des restaurants et des terrasses. Chic et cher.</p>
+        <p><b>Quoi faire :</b> Bien pour un dîner. Le musée du 1er Congrès du Parti communiste est là aussi (gratuit).</p>
+        <div class="actions"><span class="metro">Xintiandi · lignes 10 et 13</span><a class="plans" href="https://maps.apple.com/?ll=31.22,121.4745&q=Xintiandi">Ouvrir dans Plans</a></div>
+      </div>
+    </article>
     </div>
   </section>
 
   <section>
     <span class="etiquette">Manger</span>
     <div class="verre carte">
-      <h2>Sucré, mijoté, et surtout des raviolis</h2>
-      <p>La cuisine locale (benbang cai) : soja, sucre, pas de piment. Repas simple 30 à 60 yuans, bon restaurant 150 à 300 yuans par personne.</p>
+      <h2>La cuisine de Shanghai est sucrée</h2>
+      <p>Pas de piment ici, contrairement au Sichuan. Beaucoup de sauce soja, un peu de sucre, et surtout des raviolis. Un repas simple coûte 30 à 60 yuans.</p>
       <div class="grille">
-        <div class="verre"><h3>Xiaolongbao</h3><p>Raviolis vapeur au bouillon de porc. Percer, boire le jus, manger. Jia Jia Tang Bao (Huanghe Lu), Din Tai Fung.</p></div>
-        <div class="verre"><h3>Shengjianbao</h3><p>La version poêlée, croustillante dessous, le plat du matin. Yang's Dumplings (Wujiang Lu), Da Hu Chun.</p></div>
-        <div class="verre"><h3>Hongshao rou</h3><p>Porc caramélisé au soja et sucre, le plat famille. Fu 1039 (villa, réserver), Jesse (Tianping Lu).</p></div>
-        <div class="verre"><h3>Crabe poilu</h3><p>Octobre et novembre seulement : tu es pile dans la saison. Vapeur, vinaigre, gingembre. N'importe quel resto shanghaïen en ce moment.</p></div>
-        <div class="verre"><h3>Cong you ban mian</h3><p>Nouilles à l'huile de ciboule, 15 yuans, le plat de rue. Cantines de la vieille ville, Wei Xiang Zhai.</p></div>
-        <div class="verre"><h3>Le petit déjeuner</h3><p>Youtiao (beignet), dabing (galette), cifantuan (riz gluant roulé), doujiang (lait de soja). Stands de rue avant 9 h.</p></div>
+        <div class="verre"><img src="photos/xiaolongbao.jpg" alt="Xiaolongbao"><h3>Xiaolongbao</h3><p>Des raviolis vapeur remplis de bouillon. On les perce, on boit le jus, puis on les mange. Jia Jia Tang Bao, près de People's Square.</p></div>
+        <div class="verre"><img src="photos/shengjian.jpg" alt="Shengjianbao"><h3>Shengjianbao</h3><p>Pareil, mais grillés dessous, croustillants. C'est le petit déjeuner des Shanghaïens. Yang's Dumplings, à Jing'an.</p></div>
+        <div class="verre"><img src="photos/crabe.jpg" alt="Crabe poilu"><h3>Crabe poilu</h3><p>Le plat star d'octobre et novembre. Un crabe vapeur, trempé dans du vinaigre au gingembre. Tu es pile dans la saison.</p></div>
+        <div class="verre"><img src="photos/fuxing.jpg" alt="Fuxing Park"><h3>Le petit déjeuner de rue</h3><p>Avant 9 h, des stands vendent des beignets (youtiao), des galettes (dabing) et du lait de soja chaud. 5 yuans le tout.</p></div>
       </div>
-      <div class="franc"><b>Règles :</b> les cuisines ferment vers 21 h hors Xintiandi et Concession française. On commande par QR code sur la table. Pas de pourboire. Pour choisir, Dianping (le Yelp local, en chinois) : regarde les notes et les photos.</div>
+      <div class="franc"><b>À savoir :</b> on commande en scannant un QR code sur la table. On ne laisse pas de pourboire. Les cuisines ferment tôt, vers 21 h. Les Chinois dînent à 18 h.</div>
     </div>
   </section>
 
   <section>
-    <span class="etiquette">Selon l'envie du moment</span>
+    <span class="etiquette">Selon ton envie</span>
     <div class="verre carte">
       <h2>J'ai envie de…</h2>
       <div class="puces" id="puces">
         <button class="puce" data-k="marcher">marcher</button>
         <button class="puce" data-k="filmer">filmer</button>
-        <button class="puce" data-k="shopping">shopping mode</button>
+        <button class="puce" data-k="shopping">shopping</button>
         <button class="puce" data-k="sneakers">sneakers, vintage</button>
         <button class="puce" data-k="cafe">un café pour bosser</button>
         <button class="puce" data-k="soir">sortir le soir</button>
         <button class="puce" data-k="pluie">il pleut</button>
-        <button class="puce" data-k="ailleurs">un autre visage de la Chine</button>
-        <button class="puce" data-k="sport">sport</button>
-        <button class="puce" data-k="calme">calme et vert</button>
+        <button class="puce" data-k="ailleurs">quitter la ville un jour</button>
+        <button class="puce" data-k="sport">courir</button>
+        <button class="puce" data-k="calme">du calme</button>
       </div>
-      <p class="envie" data-k="marcher"><b>Concession française, entre Wukang Lu, Anfu Lu et Fuxing Lu.</b> Rues calmes, platanes, un café tous les 50 m, on se perd sans risque.</p>
-      <p class="envie" data-k="filmer"><b>Le Bund à 17 h, la passerelle de Lujiazui, 1933 Old Millfun, Wukang Building.</b> Les quatre décors reconnaissables. Le matin tôt pour éviter la foule au Bund.</p>
-      <p class="envie" data-k="shopping"><b>Anfu Lu et Wukang Lu (créateurs locaux), Huaihai Lu (grandes enseignes), Zhangyuan à Jing'an (luxe), TX Huaihai (streetwear, jeunes marques).</b> Les marques chinoises de niche sont ici : Randomevent, Roaringwild.</p>
-      <p class="envie" data-k="sneakers"><b>Zhongshan Park (vintage), TX Huaihai, YK3 (Yuyuan Rd).</b> Vintage japonais et américain bien représenté, prix proches de Tokyo.</p>
-      <p class="envie" data-k="cafe"><b>% Arabica (Wukang Lu), Manner (partout, 15 yuans), Metal Hands, Seesaw.</b> Shanghai a plus de cafés que n'importe quelle ville au monde. Wifi oui, prises rares.</p>
-      <p class="envie" data-k="soir"><b>Found 158 (Julu Lu, bars en sous-sol), Yongkang Lu, les rooftops du Bund, Elevator ou ALL pour danser.</b> Les Shanghaïens sortent tard le week-end seulement. La semaine, calme après 23 h.</p>
-      <p class="envie" data-k="pluie"><b>Musée de Shanghai, Power Station of Art (art contemporain, gratuit), les malls de Jing'an, le Shanghai Tower.</b> Le musée de Shanghai suffit pour une demi-journée.</p>
-      <p class="envie" data-k="ailleurs"><b>Zhujiajiao, village d'eau à 1 h en métro (ligne 17), ou Suzhou en train (25 min, jardins classiques).</b> Un jour entier. Suzhou vaut plus que Zhujiajiao si tu as le temps.</p>
-      <p class="envie" data-k="sport"><b>Courir sur les berges du West Bund ou le long de Suzhou Creek.</b> Le West Bund est le seul endroit plat, long et sans feux rouges.</p>
-      <p class="envie" data-k="calme"><b>Fuxing Park le matin, Century Park (Pudong), jardin botanique au sud.</b> Fuxing Park à 7 h : tai-chi, danses, chant d'opéra, la vraie vie locale.</p>
+      <p class="envie" data-k="marcher"><b>La Concession française</b>, entre Wukang Lu, Anfu Lu et Fuxing Lu. Rues calmes, arbres, un café tous les 50 mètres. Tu peux te perdre sans risque.</p>
+      <p class="envie" data-k="filmer"><b>Le Bund à 17 h, la passerelle ronde de Lujiazui, 1933 Old Millfun, le Wukang Building.</b> Ce sont les quatre décors que tout le monde reconnaît. Le matin tôt, il n'y a personne au Bund.</p>
+      <p class="envie" data-k="shopping"><b>Anfu Lu et Wukang Lu</b> pour les marques locales, <b>Huaihai Lu</b> pour les grandes enseignes, <b>TX Huaihai</b> pour le streetwear des jeunes marques chinoises, <b>Zhangyuan</b> (Jing'an) pour le luxe.</p>
+      <p class="envie" data-k="sneakers"><b>Zhongshan Park</b> pour le vintage, <b>TX Huaihai</b> et <b>YK3</b> (Yuyuan Road) pour les sneakers. Prix proches de Tokyo.</p>
+      <p class="envie" data-k="cafe"><b>% Arabica</b> (Wukang Lu), <b>Manner</b> (partout, 15 yuans), <b>Seesaw</b>. Shanghai a plus de cafés que n'importe quelle ville au monde. Le wifi marche, les prises sont rares.</p>
+      <p class="envie" data-k="soir"><b>Found 158</b> (Julu Lu, des bars en sous-sol), <b>Yongkang Lu</b>, les <b>rooftops du Bund</b>. Pour danser : Elevator ou ALL. Attention, la semaine tout est calme après 23 h.</p>
+      <p class="envie" data-k="pluie"><b>Le musée de Shanghai</b> (gratuit), <b>Power Station of Art</b> (art moderne, gratuit), les malls de Jing'an, ou monter dans la <b>Shanghai Tower</b>.</p>
+      <p class="envie" data-k="ailleurs"><b>Suzhou</b>, à 25 minutes en train : des jardins chinois classés à l'Unesco. Ou <b>Zhujiajiao</b>, un village sur l'eau, à 1 h en métro (ligne 17). Suzhou est mieux.</p>
+      <p class="envie" data-k="sport"><b>Les berges du West Bund</b> : plat, long, sans feux rouges. Ou le long de la rivière Suzhou.</p>
+      <p class="envie" data-k="calme"><b>Fuxing Park à 7 h du matin</b> : tai-chi, danses, chant d'opéra. C'est la vraie vie des Shanghaïens. Ou Century Park, à Pudong.</p>
     </div>
   </section>
 
   <section>
-    <span class="etiquette">Pièges et astuces</span>
+    <span class="etiquette">Pièges à éviter</span>
     <div class="verre carte">
-      <h2>Ce qui coince les nouveaux</h2>
+      <h2>Ce qui arrive aux nouveaux</h2>
       <ul class="liste">
-        <li><b>L'arnaque au salon de thé.</b> Sur le Bund ou Nanjing Road, des étudiants sympathiques proposent une cérémonie du thé ou un verre : addition de plusieurs milliers de yuans. Non, sourire, continuer.</li>
-        <li><b>Les faux taxis.</b> À la sortie des gares et des sites, ignore ceux qui t'abordent. Un vrai taxi a un compteur et ne négocie pas.</li>
-        <li><b>Passeport sur toi.</b> Musées et tours le demandent à l'entrée.</li>
-        <li><b>Réserver.</b> Musée de Shanghai, Shanghai Tower et les bons restaurants : via WeChat ou Dianping. Le week-end sans réservation, une heure de queue.</li>
-        <li><b>Filmer.</b> Libre dans la rue, mais pas de drone (Shanghai est en zone d'interdiction totale) et pas de caméra aux contrôles du métro.</li>
-        <li><b>Métro.</b> Rayons X pour les sacs à chaque entrée, c'est normal. Dernier métro vers 22 h 30 sur certaines lignes.</li>
-        <li><b>Horaires.</b> Déjeuner 11 h 30, dîner 18 h. Arriver à 20 h 30 dans un resto local, c'est souvent trop tard.</li>
-        <li><b>Tabac et alcool.</b> Interdit de fumer dans tout lieu public fermé, appliqué strictement. L'alcool se vend partout, Family Mart ouverts 24 h sur 24.</li>
-        <li><b>Urgences.</b> Police 110, ambulance 120. Consulat de France : 1375 Huaihai Middle Road, 6e étage, en semaine.</li>
+        <li><b>L'arnaque au thé.</b> Sur le Bund, des jeunes sympas te proposent de boire un thé avec eux. À la fin, la note fait plusieurs milliers de yuans. Dis non, souris, continue.</li>
+        <li><b>Les faux taxis.</b> Ignore ceux qui t'abordent à la sortie des gares. Un vrai taxi a un compteur et ne négocie pas.</li>
+        <li><b>Le passeport.</b> Les musées et les tours le demandent à l'entrée. Garde-le sur toi.</li>
+        <li><b>Réserver.</b> Le week-end, le musée de Shanghai et la Shanghai Tower ont une heure de queue si tu n'as pas réservé (via WeChat).</li>
+        <li><b>Filmer.</b> Dans la rue, pas de problème. Mais pas de drone : toute la ville est interdite. Et pas de caméra aux contrôles du métro.</li>
+        <li><b>Le dernier métro.</b> Vers 22 h 30 sur certaines lignes. Vérifie avant de sortir le soir.</li>
+        <li><b>Fumer.</b> Interdit partout à l'intérieur, et c'est vraiment appliqué.</li>
+        <li><b>Urgences.</b> Police 110, ambulance 120. Consulat de France : 1375 Huaihai Middle Road, 6e étage.</li>
       </ul>
     </div>
   </section>
 
-  <p class="pied">Écrit de mémoire le 14/11/2026, sans vérification web : les parcours et quartiers sont stables, les prix et horaires approximatifs. Les expos et concerts du moment : SmartShanghai ou Time Out Shanghai, en anglais.</p>
+  <p class="pied">Écrit le 14/11/2026, sans vérification web : les parcours sont stables, les prix et horaires approximatifs. Les expos du moment : SmartShanghai ou Time Out Shanghai.<br>Photos Wikimedia Commons : <a href="https://commons.wikimedia.org/wiki/File:Staircases_and_walkways_at_1933_Old_Millfun.jpg">1933</a> Lloyd T (CC BY-SA 4.0) · <a href="https://commons.wikimedia.org/wiki/File:The_Bund_(Zealotzuo).jpg">bund-jour</a> <a href="//commons.wikimedia.org/wiki/Us (Public domain) · <a href="https://commons.wikimedia.org/wiki/File:Pudong_Shanghai_November_2017_HDR_panorama.jpg">bund-nuit</a> <a href="//commons.wikimedia.org/wiki/Us (CC BY-SA 4.0) · <a href="https://commons.wikimedia.org/wiki/File:Shanghai_1935_S1_AMS-WO.jpg">carte-1930</a> United States Army Map Service (Public domain) · <a href="https://commons.wikimedia.org/wiki/File:Street_View_of_Hengshan_Rd..JPG">concession</a> <a href="//commons.wikimedia.org/w/index (CC BY-SA 3.0) · <a href="https://commons.wikimedia.org/wiki/File:Roe_inside_steamed_female_hairy_crab.jpg">crabe</a> <a href="//commons.wikimedia.org/wiki/Us (CC BY-SA 4.0) · <a href="https://commons.wikimedia.org/wiki/File:Huangpu_River_Ferry_(25778030187).jpg">ferry</a> <a rel="nofollow" class="external text"  (CC BY 2.0) · <a href="https://commons.wikimedia.org/wiki/File:Fuxing_Park,_Shanghai.JPG">fuxing</a> Jpbowen (CC BY-SA 4.0) · <a href="https://commons.wikimedia.org/wiki/File:Jing%27an_Temple_Shanghai_3.jpg">jingan</a> kalle (CC BY-SA 4.0) · <a href="https://commons.wikimedia.org/wiki/File:Pudong_Shanghai_November_2017_panorama.jpg">lujiazui</a> <a href="//commons.wikimedia.org/wiki/Us (CC BY-SA 4.0) · <a href="https://commons.wikimedia.org/wiki/File:Platform_No._1_and_2_of_Shanghai_Metro_Baoshan_Rd._Station_20260228.jpg">metro</a> <a href="//commons.wikimedia.org/wiki/Us (CC BY 4.0) · <a href="https://commons.wikimedia.org/wiki/File:2014.11.15.181427_Nanjing_Road_Pedestrian_Zone_Shanghai.jpg">nanjing</a> <a href="//commons.wikimedia.org/wiki/Us (CC0) · <a href="https://commons.wikimedia.org/wiki/File:Shanghai_Fairmont_Peace_Hotel-20150516-RM-125411.jpg">peace-hotel</a> Ermell</a (CC BY-SA 4.0) · <a href="https://commons.wikimedia.org/wiki/File:Oriental_Pearl_Tower_in_Shanghai.jpg">pearl</a> Dmitry A. (CC BY-SA 4.0) · <a href="https://commons.wikimedia.org/wiki/File:Shengjian_mantou.jpg">shengjian</a> <a href="//commons.wikimedia.org/wiki/Us (CC BY-SA 4.0) · <a href="https://commons.wikimedia.org/wiki/File:Shanghai_Alley_-_Flickr_-_basheertome.jpg">shikumen</a> <a rel="nofollow" class="external text"  (CC BY 2.0) · <a href="https://commons.wikimedia.org/wiki/File:Tianzifangbyday.jpg">tianzifang</a> Jonip (CC BY-SA 3.0) · <a href="https://commons.wikimedia.org/wiki/File:West_Bund_Museum,_Shanghai,_Jun_2020.jpg">westbund</a> <a href="//commons.wikimedia.org/w/index (CC BY-SA 4.0) · <a href="https://commons.wikimedia.org/wiki/File:Wukang_Mansion_(20191114161507).jpg">wukang</a> N509FZ</a (CC BY-SA 4.0) · <a href="https://commons.wikimedia.org/wiki/File:Xiao_Long_Bao_by_Junhao!.jpg">xiaolongbao</a> <a rel="nofollow" class="external text"  (CC BY 2.0) · <a href="https://commons.wikimedia.org/wiki/File:Huxinting_Teahouse_at_the_Yu_Garden_pond,_Old_City,_Shanghai.jpg">yuyuan</a> <a href="//commons.wikimedia.org/wiki/Us (CC BY-SA 4.0). Carte : OpenStreetMap.</p>
 </main>
 <script>
 document.querySelectorAll('.puce').forEach(function(b){b.addEventListener('click',function(){
@@ -276,6 +428,22 @@ document.querySelectorAll('.puce').forEach(function(b){b.addEventListener('click
   document.querySelectorAll('.puce').forEach(function(x){x.classList.toggle('on',x===b)});
   document.querySelectorAll('.envie').forEach(function(p){p.classList.toggle('vu',p.dataset.k===k)});
 })});
+
+</script>
+<script>
+(function(){const m=document.querySelector('main');if(!m)return;const secs=[...m.querySelectorAll('section')].filter(s=>s.querySelector(':scope>.etiquette'));
+if(secs.length<3)return;const nav=document.createElement('nav');nav.className='lis-nav';
+const brut=secs.map(s=>s.querySelector(':scope>.etiquette').textContent.replace(/\s*:\s*\d+\s*\/\s*\d+.*$/,'').trim());
+const tetes=brut.map(t=>t.split('·')[0].trim());
+secs.forEach((s,i)=>{s.id=s.id||'ch'+(i+1);const a=document.createElement('a');a.href='#'+s.id;
+const parts=brut[i].split('·').map(x=>x.trim());let t=parts[0];
+if(tetes.filter(x=>x===t).length>1&&parts[1])t=parts[1].replace(/^\d+\.\s*/,'');
+t=t.replace(/\s*:.*$/,'');t=t.charAt(0).toUpperCase()+t.slice(1);a.textContent=t.length>26?t.slice(0,24)+'…':t;nav.appendChild(a)});
+const hero=m.querySelector('header');(hero||m.firstElementChild).insertAdjacentElement('afterend',nav);
+const links=[...nav.children];const pb=document.querySelector('.lis-progres');
+function maj(){const y=window.scrollY+120;let k=0;secs.forEach((s,i)=>{if(s.offsetTop<=y)k=i});links.forEach((a,i)=>a.classList.toggle('on',i===k));
+if(pb){const h=document.documentElement;pb.style.width=(100*h.scrollTop/(h.scrollHeight-h.clientHeight))+'%'}}
+addEventListener('scroll',maj,{passive:true});maj();})();
 </script>
 </body>
 </html>
