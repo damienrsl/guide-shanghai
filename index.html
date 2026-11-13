@@ -80,12 +80,13 @@ body.aura .franc{padding:18px 22px!important;margin-top:18px!important}
 body.aura .pied{font-size:14px!important}
 /* grilles : une carte par idée, pleine largeur */
 .grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px;margin-top:6px}
-.grille>.spec,.grille>.chiffre,.grille>.modele{border-top:0!important;padding:20px 22px!important;margin:0!important;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.95);border-radius:var(--r-l);box-shadow:0 8px 24px -18px rgba(12,20,98,.25);transition:transform .35s var(--ressort),box-shadow .35s}
+.grille>*{border-top:0!important;padding:20px 22px!important;margin:0!important;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.95);border-radius:var(--r-l);box-shadow:0 8px 24px -18px rgba(12,20,98,.25);transition:transform .35s var(--ressort),box-shadow .35s}
 .grille>*:hover{transform:translateY(-2px);box-shadow:0 18px 34px -18px rgba(12,20,98,.35)}
 .grille>.chiffre{display:block}
 .grille>.chiffre .gros{display:block;white-space:nowrap;font-size:clamp(34px,3.6vw,56px)!important;min-width:0!important;margin-bottom:10px;line-height:.95}
 .grille>.chiffre .barre{margin-top:14px}
 .grille>.modele{margin:0!important}
+.grille>*:first-of-type{padding-top:20px!important}
 .grille+.franc{grid-column:1/-1}
 /* boutons de jeu plus gros, tapables */
 body.aura .puce{font-size:1rem!important;padding:12px 18px!important;border-radius:16px!important;line-height:1.35}
@@ -95,6 +96,28 @@ body.aura .objectif .v{font-size:1.1rem!important}
 /* chaque fait = une carte, chaque jeu = large */
 @media(min-width:900px){body.aura section.large .carte{padding:40px 48px!important}}
 @media(prefers-reduced-motion:reduce){.grille>*{transition:none}}
+/* aucun texte de carte sous 1rem, quelle que soit la classe propre à la page */
+body.aura .carte p,body.aura .carte li,body.aura .verre p,body.aura .verre li{font-size:max(1rem,1em)!important}
+body.aura .carte h3,body.aura .verre h3{font-size:max(1.15rem,1em)!important}
+/* CRITÈRES DE LISIBILITÉ (14/11, capture du tableau) :
+   1. une ligne de texte ne dépasse pas 72 caractères ; 2. un chiffre n'est jamais à plus de 600 px de son libellé ;
+   3. les chiffres sont plus gros que le texte ; 4. le verre est assez opaque pour que le bleu du fond ne gêne pas. */
+body.aura .carte>p,body.aura .carte>h2,body.aura .franc,body.aura .hero p,body.aura .spec p,body.aura .spec ul,body.aura .chiffre p,body.aura .dictee,body.aura .modele,body.aura .bilan,body.aura .formule{max-width:72ch}
+body.aura .verre{background:linear-gradient(180deg,rgba(255,255,255,.93),rgba(255,255,255,.84))!important}
+body.aura .grille>*{background:rgba(255,255,255,.78)!important}
+body.aura table{max-width:760px!important;width:100%}
+body.aura td:not(:first-child){font-size:1.3rem!important;font-weight:600;letter-spacing:-.01em;width:120px}
+body.aura td:first-child{color:var(--texte-2)}
+body.aura tr:nth-child(even) td{background:rgba(40,95,255,.045)}
+body.aura td{padding:14px 12px!important}
+body.aura th{padding:8px 12px 10px!important}
+body.aura td:first-child,body.aura th:first-child{padding-left:14px!important;border-radius:10px 0 0 10px}
+body.aura td:last-child,body.aura th:last-child{padding-right:14px!important;border-radius:0 10px 10px 0}
+body.aura .objectif{max-width:760px}
+/* listes de cartes avec photo (guides) : 2 colonnes sur Mac */
+.grille-2{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:900px){.grille-2{grid-template-columns:1fr 1fr}}
+.grille-2>*{margin:0!important}
 
 main{max-width:680px;margin:0 auto;position:relative;z-index:1;padding:0 16px 60px}
 .hero{padding:56px 4px 20px;position:relative}
@@ -246,7 +269,8 @@ ul.liste li:first-child{border-top:0;padding-top:4px}
       <h2>Une sortie = une demi-journée</h2>
       <p>Commence par la première ce soir. Chaque carte a un bouton pour ouvrir le lieu dans Plans.</p>
       
-    <article class="sortie">
+    <div class="grille-2">
+<article class="sortie">
       <img src="photos/bund-nuit.jpg" alt="Le Bund" loading="lazy">
       <div class="corps">
         <span class="num">01</span>
@@ -356,6 +380,7 @@ ul.liste li:first-child{border-top:0;padding-top:4px}
         <div class="actions"><span class="metro">Xintiandi · lignes 10 et 13</span><a class="plans" href="https://maps.apple.com/?ll=31.22,121.4745&q=Xintiandi">Ouvrir dans Plans</a></div>
       </div>
     </article>
+</div>
     </div>
   </section>
 
